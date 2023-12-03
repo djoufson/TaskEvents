@@ -9,6 +9,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder.Services.AddSingleton<ViewModel>();
 		builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddSingleton<App>();
+        builder.Services.AddSingleton<IJob, Job>();
         builder
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
@@ -24,4 +26,3 @@ public static class MauiProgram
 		return builder.Build();
 	}
 }
-

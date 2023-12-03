@@ -2,9 +2,10 @@
 
 public partial class App : Application
 {
-	public App()
+	public App(IJob job)
 	{
 		InitializeComponent();
+		job.Start();
 
 		MainPage = new AppShell();
 	}
