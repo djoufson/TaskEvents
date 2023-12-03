@@ -1,40 +1,14 @@
-﻿using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace TaskEvents;
 
-public class ViewModel : INotifyPropertyChanged
+public partial class ViewModel : ObservableObject
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-    private string _textMessage = string.Empty;
-    public string TextMessage
+    [RelayCommand]
+    private static void SendEvent()
     {
-        get => _textMessage;
-        set => SetValue(ref _textMessage, value);
-    }
-    public ICommand SendEventCommand { get; private set; }
-    public ViewModel()
-    {
-        SendEventCommand = new Command(SendEvent);
-    }
-
-    private void SendEvent()
-    {
-        Debug.WriteLine("Clicked");
-    }
-
-    private void SetValue<T>(ref T property, T value, [CallerMemberName] string propertyName = "")
-    {
-        if (Equals(property,value))
-            return;
-        property = value;
-        OnPropertyChanged(propertyName);
-    }
-
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        WeakReferenceMessenger.Default.Send(new Message($"Message sent from thread: {Environment.CurrentManagedThreadId}"));
     }
 }
