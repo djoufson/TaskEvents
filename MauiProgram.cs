@@ -7,7 +7,9 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
-		builder
+		builder.Services.AddSingleton<ViewModel>();
+		builder.Services.AddSingleton<MainPage>();
+        builder
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
